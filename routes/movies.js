@@ -1,14 +1,17 @@
 const express = require('express');
+const MovieServices = require('../services/movies');
 
 function moviesApi(app) {
   const router = express.Router();
+  const movieService = new MovieServices();
   app.use('/api/movies', router);
 
   router.get('/', async function (req, res, next) {
     const { tags } = req.query;
     try {
+      const movies = await movieService.getMovies({ tags });
       res.status(200).json({
-        data: `Movie list ${tags}`,
+        data: movies,
         message: 'Movies listed',
       });
     } catch (err) {
@@ -18,9 +21,10 @@ function moviesApi(app) {
 
   router.get('/:movieId', async function (req, res, next) {
     const { movieId } = req.params;
+    const movie = await movieService.getMovie({ movieId });
     try {
       res.status(200).json({
-        data: `Single movie ${movieId}`,
+        data: movie,
         message: 'Movie retrieve',
       });
     } catch (err) {
@@ -30,9 +34,10 @@ function moviesApi(app) {
 
   router.post('/', async function (req, res, next) {
     const { body: movie } = req;
+    const createdMovieId = await movieService.createMovie({ movie });
     try {
       res.status(200).json({
-        data: movie,
+        data: createdMovieId,
         message: 'Movie created',
       });
     } catch (err) {
@@ -41,12 +46,12 @@ function moviesApi(app) {
   });
 
   router.put('/:movieId', async function (req, res, next) {
-    //const movieId = req.params;
+    const movieId = req.params;
     const { body: movie } = req;
-
+    const updatedMovieId = await movieService.updateMovie({ movieId, movie });
     try {
       res.status(200).json({
-        data: movie,
+        data: updatedMovieId,
         message: 'Movie updated',
       });
     } catch (err) {
@@ -56,9 +61,10 @@ function moviesApi(app) {
 
   router.delete('/:movieId', async function (req, res, next) {
     const movieId = req.params;
+    const deletedMovieId = await movieService.deleteMovie({ movieId });
     try {
       res.status(200).json({
-        data: movieId,
+        data: deletedMovieId,
         message: 'Movie deleted',
       });
     } catch (err) {
