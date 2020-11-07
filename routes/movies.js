@@ -1,5 +1,5 @@
 const express = require('express');
-const MovieServices = require('../services/movies');
+const MovieServices = require('../services/moviesMock');
 const validationHandler = require('../utils/middleware/validationHandler');
 const {
   movieIdSchema,
