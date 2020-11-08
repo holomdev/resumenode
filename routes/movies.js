@@ -1,5 +1,5 @@
 const express = require('express');
-const MovieServices = require('../services/moviesMock');
+const MovieServices = require('../services/moviesMongo');
 const validationHandler = require('../utils/middleware/validationHandler');
 const {
   movieIdSchema,
@@ -9,8 +9,9 @@ const {
 
 function moviesApi(app) {
   const router = express.Router();
-  const movieService = new MovieServices();
   app.use('/api/movies', router);
+
+  const movieService = new MovieServices();
 
   router.get('/', async function (req, res, next) {
     const { tags } = req.query;
@@ -64,7 +65,7 @@ function moviesApi(app) {
     validationHandler({ movieId: movieIdSchema }, 'params'),
     validationHandler(updateMovieSchema),
     async function (req, res, next) {
-      const movieId = req.params;
+      const { movieId } = req.params;
       const { body: movie } = req;
       const updatedMovieId = await movieService.updateMovie({ movieId, movie });
       try {
@@ -82,7 +83,7 @@ function moviesApi(app) {
     '/:movieId',
     validationHandler({ movieId: movieIdSchema }, 'params'),
     async function (req, res, next) {
-      const movieId = req.params;
+      const { movieId } = req.params;
       const deletedMovieId = await movieService.deleteMovie({ movieId });
       try {
         res.status(200).json({
