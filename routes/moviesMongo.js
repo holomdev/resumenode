@@ -31,8 +31,8 @@ function moviesApi(app) {
     validationHandler({ movieId: movieIdSchema }, 'params'),
     async function (req, res, next) {
       const { movieId } = req.params;
-      const movie = await movieService.getMovie({ movieId });
       try {
+        const movie = await movieService.getMovie({ movieId });
         res.status(200).json({
           data: movie,
           message: 'Movie retrieve',
@@ -49,8 +49,8 @@ function moviesApi(app) {
     next
   ) {
     const { body: movie } = req;
-    const createdMovieId = await movieService.createMovie({ movie });
     try {
+      const createdMovieId = await movieService.createMovie({ movie });
       res.status(200).json({
         data: createdMovieId,
         message: 'Movie created',
@@ -67,8 +67,11 @@ function moviesApi(app) {
     async function (req, res, next) {
       const { movieId } = req.params;
       const { body: movie } = req;
-      const updatedMovieId = await movieService.updateMovie({ movieId, movie });
       try {
+        const updatedMovieId = await movieService.updateMovie({
+          movieId,
+          movie,
+        });
         res.status(200).json({
           data: updatedMovieId,
           message: 'Movie updated',
@@ -84,8 +87,8 @@ function moviesApi(app) {
     validationHandler({ movieId: movieIdSchema }, 'params'),
     async function (req, res, next) {
       const { movieId } = req.params;
-      const deletedMovieId = await movieService.deleteMovie({ movieId });
       try {
+        const deletedMovieId = await movieService.deleteMovie({ movieId });
         res.status(200).json({
           data: deletedMovieId,
           message: 'Movie deleted',
