@@ -5,11 +5,11 @@ const {
   movieIdSchema,
   updateMovieSchema,
   createMovieSchema,
-} = require('../utils/schemas/movies');
+} = require('../utils/schemas/moviesMongo');
 
 function moviesApi(app) {
   const router = express.Router();
-  app.use('/api/movies', router);
+  app.use('/api/mongo/movies', router);
 
   const movieService = new MovieServices();
 
