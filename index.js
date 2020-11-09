@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const { config } = require('./config/index');
 const moviesApiMongo = require('./routes/moviesMongo');
+const moviesApiMock = require('./routes/moviesMock');
 const notFoundHandler = require('./utils/middleware/notFoundHandler');
 const {
   logErrors,
@@ -13,6 +14,7 @@ app.use(express.json());
 
 //routes
 moviesApiMongo(app);
+moviesApiMock(app);
 
 //404
 app.use(notFoundHandler);
