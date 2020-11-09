@@ -7,7 +7,7 @@ const {
   createMovieSchema,
 } = require('../utils/schemas/moviesMongo');
 
-function moviesApi(app) {
+function moviesApiMongo(app) {
   const router = express.Router();
   app.use('/api/mongo/movies', router);
 
@@ -100,4 +100,4 @@ function moviesApi(app) {
   );
 }
 
-module.exports = moviesApi;
+module.exports = moviesApiMongo;
