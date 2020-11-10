@@ -9,6 +9,11 @@ const config = {
   dbMongoHost: process.env.DB_HOST,
   dbMongoName: process.env.DB_NAME,
   dbMongoPort: process.env.DB_PORT,
+  mysqlUser: process.env.MYSQL_USER,
+  mysqlPassword: process.env.MYSQL_PASSWORD,
+  mysqlHost: process.env.MYSQL_HOST,
+  mysqlName: process.env.MYSQL_NAME,
+  mysqlPort: process.env.MYSQL_PORT,
 };
 
 module.exports = { config };
